@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Hello, This is sample JavaScript Animation!</title>
+	
+	<style>
+		.content{
+			width:600px;
+			margin:0 auto;
+		}
+		
+		.content .img_area{
+			width:350px;
+			float:left;
+			display:inline-block;
+		}
+		
+		.content .img_area img{
+			width:100%;
+			position:relative;
+			height:auto
+		}
+		
+		.content .img_area .demo::placeholder{
+			font-weight:bold;
+			color:black;
+		}
+		.content .img_area .demo{
+			position: absolute;
+			top:20%;
+			left:35%;
+			border:none;
+			background:transparent;
+		}
+		
+		#demo{
+			padding:10px;
+			border:1px solid #ddd;
+			margin-top:175px;
+			margin-left:10px;
+			width:200px;
+			border-radious:5px
+		}
+	</style>
+  </head>
+  <body>
+    
+	<div class='content'>
+		<div class='img_area'>
+			<img src='canvas.png'>
+			<input type="text" class="demo" readonly>
+		</div>
+		
+		<input type="text" id="demo">
+	</div>
+	
+	
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="jquery.min.js"></script>
+	
+	<script>
+	$(document).ready(function() {
+		$("#demo").on("keyup", function(){
+			var value = this.value;
+			$(".demo").val(value)
+		})
+	
+	
+			timeout_var = null;
+		function typeWriter(selector_target, text_list, placeholder, i = 0, text_list_i=0, delay_ms=200) {
+				if (!i) {
+					document.querySelector(placeholder).placeholder = "";
+					document.querySelector(selector_target).placeholder = "";
+					
+				}
+				txt = text_list[text_list_i];
+				if (i < txt.length) {
+					 document.querySelector(placeholder).placeholder += txt.charAt(i);
+					document.querySelector(selector_target).placeholder += txt.charAt(i);
+					
+					i++;
+					setTimeout(typeWriter, delay_ms, selector_target, text_list, placeholder, i, text_list_i);
+				}
+				else {
+					text_list_i++;
+					if (typeof text_list[text_list_i] === "undefined")  {
+						// set "return;" for disabled infinite loop 
+						setTimeout(typeWriter, (delay_ms*5), selector_target, text_list, placeholder);
+					}
+					else {
+						i = 0;
+						setTimeout(typeWriter, (delay_ms*3), selector_target, text_list, placeholder, i, text_list_i);
+					}
+				}
+			}
+
+			text_list = [
+				"Example Typing 1",
+				"Example Typing 2",
+				"Example Typing 3",
+				"Example Typing Last"
+			];
+
+			return_value = typeWriter(".demo", text_list, '#demo');
+		})
+	</script>
+	
+  </body>
+</html>
